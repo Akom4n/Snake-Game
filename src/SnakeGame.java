@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class SnakeGame extends JPanel{
 
@@ -17,7 +18,12 @@ public class SnakeGame extends JPanel{
     int boardHeight;
     int tileSize = 25;
 
+    //Snake
     Tile snakeHead;
+
+    //Food
+    Tile food;
+    Random random;
 
     SnakeGame(int boardWidth, int boardHeight){
         this.boardWidht = boardWidth;
@@ -26,6 +32,10 @@ public class SnakeGame extends JPanel{
         setBackground(Color.BLACK);
 
         snakeHead = new Tile(5, 5);
+
+        food = new Tile(10, 10);
+        random = new Random();
+        placeFood();
     }
 
     public void paintComponent(Graphics g){
@@ -40,8 +50,19 @@ public class SnakeGame extends JPanel{
             g.drawLine(0, i*tileSize, boardWidht, i*tileSize);
         }
 
+
+
+        //Food
+        g.setColor(Color.red);
+        g.fillRect(food.x * tileSize, food.y * tileSize, tileSize, tileSize);
+
         //Snake
         g.setColor(Color.green);
         g.fillRect(snakeHead.x * tileSize,snakeHead.y * tileSize, tileSize, tileSize);
+    }
+
+    public void placeFood(){
+        food.x = random.nextInt(boardWidht/tileSize); //600/25 = 24
+        food.y = random.nextInt(boardHeight/tileSize);
     }
 }
